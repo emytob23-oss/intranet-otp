@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -949,43 +950,464 @@ const productsDatabase: Record<
     ],
   },
   3: {
-    categoryName: "Tablets",
+    categoryName: "Muletas",
     products: [
-      {
-        id: 301,
-        name: "Tablet Pro",
-        price: 799,
-        image: "tablet-pro.jpg",
-        description: "Tablet de gran tamaño para productividad",
-        specs: {
-          Pantalla: '12.9" OLED',
-          Procesador: "A16 Bionic",
-          RAM: "8GB",
-          "Almacenamiento": "256GB",
-          Batería: "10 horas",
-          "Peso": "580g",
-        },
-      },
+     {
+    id: 23,
+    name: "Muletas Convencionales en Aluminio M",
+    price: 75000 ,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/07/muletas-ortopedicas.webp",
+    description:
+      "Par de muletas axilares fabricadas en aluminio, diseñadas para brindar apoyo, estabilidad y descarga parcial o total de una extremidad inferior. Cuentan con altura graduable, apoyo axilar acolchado, empuñaduras y conteras antideslizantes.",
+    specs: {
+      Categoría: "Muletas ortopédicas",
+      Tipo: "Muletas convencionales axilares",
+      Presentación: "Par",
+      Material: "Aluminio",
+      Ajuste: "Altura graduable",
+      "Apoyo superior": "Axilar acolchado",
+      Empuñaduras: "Ergonómicas",
+      Conteras: "Caucho antideslizante",
+      Plegable: "No",
+      Público: "Adultos",
+      "Capacidad máxima": "No especificada",
+      "Medidas disponibles": "No especificadas",
+      "Registro sanitario INVIMA": "2017DM-0016757",
+      Garantía: "No especificada",
+      Uso:
+        "Apoyo durante la marcha para personas que necesitan disminuir o evitar la carga sobre una extremidad inferior."
+    }
+  },
+  {
+    id: 24,
+    name: "Muletas Convencionales Pediátricas en Aluminio",
+    price: 75000,
+    image: "https://ortopedicos.co/wp-content/uploads/2025/05/muletas-pediatricas.webp",
+    description:
+      "Muletas axilares pediátricas en aluminio, livianas y ajustables, diseñadas para brindar apoyo y estabilidad a niños durante la marcha. Incorporan apoyos acolchados y conteras antideslizantes para mayor comodidad y seguridad.",
+    specs: {
+      Categoría: "Muletas ortopédicas pediátricas",
+      Tipo: "Muletas convencionales axilares",
+      Presentación: "Par",
+      Material: "Aluminio",
+      Ajuste: "Altura graduable",
+      "Apoyo superior": "Axilar acolchado",
+      Empuñaduras: "Adaptadas para uso pediátrico",
+      Conteras: "Caucho antideslizante",
+      Plegable: "No",
+      Público: "Niños y usuarios de baja estatura",
+      "Capacidad máxima": "No especificada",
+      "Medidas disponibles": "No especificadas",
+      "Registro sanitario INVIMA": "2017DM-0016757",
+      Garantía: "No especificada",
+      Uso:
+        "Apoyo pediátrico durante la marcha para reducir la carga sobre una o ambas extremidades inferiores."
+    }
+  },
+  {
+    id: 25,
+    name: "Muleta Bastón Canadiense Europeo",
+    price: 45000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/07/muleta-canadiense.webp",
+    description:
+      "Muleta canadiense tipo europeo con soporte para antebrazo, diseñada para proporcionar estabilidad y apoyo durante la marcha sin utilizar soporte axilar. Puede comercializarse individualmente o por par.",
+    specs: {
+      Categoría: "Muletas canadienses",
+      Tipo: "Muleta canadiense tipo europeo",
+      Presentación: "Unidad o par",
+      "Soporte superior": "Abrazadera para antebrazo",
+      Empuñadura: "Ergonómica",
+      Ajuste: "Altura graduable",
+      Contera: "Caucho antideslizante",
+      "Lado de uso": "Derecho, izquierdo o bilateral",
+      Material: "No especificado",
+      "Capacidad máxima": "No especificada",
+      "Medidas disponibles": "No especificadas",
+      "Registro sanitario INVIMA": "2017DM-0016757",
+      Garantía: "No especificada",
+      Uso:
+        "Brinda apoyo durante la marcha a usuarios con movilidad reducida que conservan fuerza y control funcional en brazos y manos."
+    }
+  },
+  {
+    id: 26,
+    name: "Muletas Canadienses Tipo Europeo en Aluminio",
+    price: 48000,
+    image: "https://ortopedicos.co/wp-content/uploads/2025/05/baston-en-aluminio.webp",
+    description:
+      "Muletas canadienses tipo europeo fabricadas en aluminio, livianas y graduables. Su soporte de antebrazo y empuñadura ergonómica permiten una marcha más cómoda y controlada. Disponibles por unidad o por par.",
+    specs: {
+      Categoría: "Muletas canadienses",
+      Tipo: "Muletas canadienses tipo europeo",
+      Presentación: "Unidad o par",
+      Material: "Aluminio",
+      "Soporte superior": "Abrazadera para antebrazo",
+      Empuñaduras: "Ergonómicas",
+      Ajuste: "Altura graduable",
+      Conteras: "Caucho antideslizante",
+      "Lado de uso": "Derecho, izquierdo o bilateral",
+      Plegable: "No",
+      "Capacidad máxima": "No especificada",
+      "Medidas disponibles": "No especificadas",
+      "Registro sanitario INVIMA": "2017DM-0016757",
+      Garantía: "No especificada",
+      Uso:
+        "Apoyo durante la marcha para usuarios que requieren estabilidad y descarga parcial de las extremidades inferiores."
+    }
+  },
+   {
+    id: 27,
+    name: "Recatón de Repuesto para Muletas",
+    price: 12000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/10/Recaton-%E2%80%93-Repuesto-para-Muletas.webp",
+    description:
+      "Par de recatones de repuesto para muletas, diseñados para reemplazar las conteras desgastadas y mejorar el agarre de la muleta sobre el piso. Ayudan a brindar mayor estabilidad y seguridad durante la marcha.",
+    specs: {
+      Categoría: "Repuestos para muletas",
+      Tipo: "Recatón o contera",
+      Presentación: "Par",
+      Material: "Caucho antideslizante",
+      Color: "No especificado",
+      Compatibilidad: "Muletas convencionales o canadienses compatibles",
+      Instalación: "Ajuste a presión en la parte inferior de la muleta",
+      Función: "Mejorar la tracción y proteger el extremo del tubo",
+      "Diámetro interno": "No especificado",
+      "Registro sanitario INVIMA": "2017DM-0016757",
+      Garantía: "No especificada",
+      Recomendación:
+        "Verificar el diámetro del tubo de la muleta antes de realizar la compra."
+    }
+  },
+  {
+    id: 28,
+    name: "Repuesto Axilar para Muletas",
+    price: 12000,
+    image: "https://ortopedicos.co/wp-content/uploads/2022/02/Repuesto-Axilar-para-Muletas-par.webp",
+    description:
+      "Par de almohadillas axilares de repuesto para muletas convencionales. Proporcionan una superficie acolchada en la zona de apoyo superior para mejorar la comodidad del usuario durante la marcha.",
+    specs: {
+      Categoría: "Repuestos para muletas",
+      Tipo: "Almohadilla axilar",
+      Presentación: "Par",
+      Material: "Espuma o goma acolchada",
+      Color: "No especificado",
+      Compatibilidad: "Muletas convencionales axilares compatibles",
+      Instalación: "Se instala sobre el soporte axilar de la muleta",
+      Función: "Acolchar y proteger la zona de apoyo axilar",
+      "Medidas internas": "No especificadas",
+      "Registro sanitario INVIMA": "2017DM-0016757",
+      Garantía: "No especificada",
+      Recomendación:
+        "Verificar el tamaño y la forma del soporte axilar antes de realizar la compra."
+    }
+  },
+  {
+    id: 29,
+    name: "Repuesto de Empuñadura para Muletas",
+    price: 12000,
+    image: "https://ortopedicos.co/wp-content/uploads/2022/02/Repuesto-Empunadura-manilar-para-Muletas-par.webp",
+    description:
+      "Par de empuñaduras o manilares de repuesto para muletas, diseñados para reemplazar piezas deterioradas y ofrecer un agarre más cómodo y seguro durante el desplazamiento.",
+    specs: {
+      Categoría: "Repuestos para muletas",
+      Tipo: "Empuñadura o manilar",
+      Presentación: "Par",
+      Material: "Espuma o goma acolchada",
+      Color: "No especificado",
+      Compatibilidad: "Muletas convencionales compatibles",
+      Instalación: "Se instala sobre el tubo de agarre de la muleta",
+      Función: "Mejorar el agarre y la comodidad de las manos",
+      "Diámetro interno": "No especificado",
+      "Registro sanitario INVIMA": "2017DM-0016757",
+      Garantía: "No especificada",
+      Recomendación:
+        "Confirmar el diámetro y largo de la empuñadura original antes de realizar la compra."
+    }
+  }
     ],
   },
   4: {
-    categoryName: "Auriculares",
+    categoryName: "Bastones",
     products: [
       {
-        id: 401,
-        name: "Auriculares Inalámbricos Premium",
-        price: 299,
-        image: "headphones-premium.jpg",
-        description: "Auriculares con cancelación de ruido activa",
-        specs: {
-          "Tipo": "Over-ear",
-          "Conexión": "Bluetooth 5.3",
-          "Cancelación de Ruido": "Activa ANC",
-          Autonomía: "30 horas",
-          "Micrófono": "Sí",
-          "Peso": "250g",
-        },
-      },
+    id: 30,
+    name: "Bastón en Aluminio con Diseño Tipo Paraguas",
+    price: 40000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/07/Baston-en-Aluminio-con-diseno-tipo-Paraguas.webp",
+    description:
+      "Bastón liviano en aluminio con empuñadura curva tipo paraguas, diseñado para brindar apoyo y estabilidad durante la marcha. Su formato clásico permite un agarre cómodo para el uso diario.",
+    specs: {
+      Categoría: "Bastones ortopédicos",
+      Tipo: "Bastón de un punto",
+      Material: "Aluminio",
+      Empuñadura: "Curva tipo paraguas",
+      Color: "Bronce",
+      Presentación: "Unidad",
+      Plegable: "No",
+      "Altura graduable": "Sí",
+      Recatón: "Caucho antideslizante",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Apoyo durante la marcha para personas que requieren mayor estabilidad y equilibrio."
+    }
+  },
+  {
+    id: 31,
+    name: "Bastón en Aluminio Cuello de Cisne",
+    price: 40000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/07/Baston-en-Aluminio-Cuello-De-Cisne.webp",
+    description:
+      "Bastón en aluminio con diseño de cuello de cisne y empuñadura horizontal, desarrollado para ofrecer un punto de apoyo cómodo y estable durante los desplazamientos cotidianos.",
+    specs: {
+      Categoría: "Bastones ortopédicos",
+      Tipo: "Bastón de un punto",
+      Material: "Aluminio",
+      Diseño: "Cuello de cisne",
+      Empuñadura: "Horizontal",
+      Color: "Bronce",
+      Presentación: "Unidad",
+      Accesorio: "Correa de seguridad",
+      Plegable: "No",
+      "Altura graduable": "Sí",
+      Recatón: "Caucho antideslizante",
+      "Precio anterior": "$45.000",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Brinda apoyo y estabilidad a personas con dificultad leve para caminar o mantener el equilibrio."
+    }
+  },
+  {
+    id: 32,
+    name: "Bastón en Aluminio Mango Tipo Serrucho",
+    price: 40000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/07/Baston-en-Aluminio-Mango-tipo-Serrucho.webp",
+    description:
+      "Bastón liviano en aluminio con mango anatómico tipo serrucho, diseñado para adaptarse a la forma de la mano y proporcionar un agarre más firme durante la marcha.",
+    specs: {
+      Categoría: "Bastones ortopédicos",
+      Tipo: "Bastón de un punto",
+      Material: "Aluminio",
+      Empuñadura: "Anatómica tipo serrucho",
+      Color: "Bronce",
+      Presentación: "Unidad",
+      Plegable: "No",
+      "Altura graduable": "Sí",
+      Recatón: "Caucho antideslizante",
+      "Precio anterior": "$45.000",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Apoyo para la marcha con empuñadura anatómica que facilita la sujeción."
+    }
+  },
+  {
+    id: 33,
+    name: "Bastón en Aluminio Mango Tipo T Negro",
+    price: 40000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/07/Baston-en-Aluminio-Mango-tipo-T-Negro.webp",
+    description:
+      "Bastón en aluminio con empuñadura tipo T, diseñado para ofrecer un agarre práctico y un apoyo estable durante los desplazamientos diarios.",
+    specs: {
+      Categoría: "Bastones ortopédicos",
+      Tipo: "Bastón de un punto",
+      Material: "Aluminio",
+      Empuñadura: "Tipo T",
+      Color: "Negro",
+      Presentación: "Unidad",
+      Plegable: "No",
+      "Altura graduable": "Sí",
+      Recatón: "Caucho antideslizante",
+      "Precio anterior": "$45.000",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Indicado para usuarios que necesitan apoyo adicional y mayor seguridad al caminar."
+    }
+  },
+  {
+    id: 34,
+    name: "Bastón con Empuñadura Tipo Martillo Ergonómico Negro",
+    price: 40000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/10/Baston-Con-Empunadura-tipo-Martillo-Ergonomico-Negro.webp",
+    description:
+      "Bastón con empuñadura ergonómica tipo martillo, diseñada para distribuir mejor la presión sobre la mano y ofrecer un agarre cómodo durante el uso cotidiano.",
+    specs: {
+      Categoría: "Bastones ortopédicos",
+      Tipo: "Bastón de un punto",
+      Empuñadura: "Tipo martillo ergonómico",
+      Color: "Negro",
+      Presentación: "Unidad",
+      Plegable: "No",
+      "Altura graduable": "Sí",
+      Recatón: "Caucho antideslizante",
+      "Precio anterior": "$45.000",
+      Material: "No especificado",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Apoyo para caminar con empuñadura ergonómica que mejora la comodidad de la mano."
+    }
+  },
+  {
+    id: 35,
+    name: "Bastón con Empuñadura Tipo Martillo Ergonómico Bronce",
+    price: 40000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/10/Baston-Con-Empunadura-tipo-Martillo-Ergonomico-Bronce.webp",
+    description:
+      "Bastón de apoyo con acabado bronce y empuñadura ergonómica tipo martillo. Brinda un punto de apoyo firme y cómodo para mejorar la estabilidad durante la marcha.",
+    specs: {
+      Categoría: "Bastones ortopédicos",
+      Tipo: "Bastón de un punto",
+      Empuñadura: "Tipo martillo ergonómico",
+      Color: "Bronce",
+      Presentación: "Unidad",
+      Accesorio: "Correa de seguridad",
+      Plegable: "No",
+      "Altura graduable": "Sí",
+      Recatón: "Caucho antideslizante",
+      "Precio anterior": "$45.000",
+      Material: "No especificado",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Brinda estabilidad adicional durante la marcha y comodidad en el agarre."
+    }
+  },
+  {
+    id: 36,
+    name: "Bastón Plegable con Empuñadura en T Plateado",
+    price: 40000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/10/Baston-plegable-con-empunadura-en-T-Plateado.webp",
+    description:
+      "Bastón plegable de color plateado con empuñadura tipo T. Su diseño compacto facilita guardarlo y transportarlo cuando no está en uso.",
+    specs: {
+      Categoría: "Bastones ortopédicos",
+      Tipo: "Bastón plegable de un punto",
+      Empuñadura: "Tipo T",
+      Color: "Plateado",
+      Presentación: "Unidad",
+      Plegable: "Sí",
+      Secciones: "Plegable en varias secciones",
+      Accesorio: "Correa para mantenerlo plegado",
+      Recatón: "Caucho antideslizante",
+      Material: "No especificado",
+      "Altura graduable": "No especificada",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Ideal para usuarios que necesitan un bastón fácil de almacenar y transportar."
+    }
+  },
+  {
+    id: 37,
+    name: "Bastón Plegable con Empuñadura en T Dorado",
+    price: 40000,
+    image: "https://ortopedicos.co/wp-content/uploads/2022/02/Baston-plegable-con-empunadura-en-T-Dorado.webp",
+    description:
+      "Bastón plegable con acabado dorado y empuñadura tipo T, diseñado para brindar apoyo durante la marcha y facilitar su transporte en bolsos o equipaje.",
+    specs: {
+      Categoría: "Bastones ortopédicos",
+      Tipo: "Bastón plegable de un punto",
+      Empuñadura: "Tipo T",
+      Color: "Dorado",
+      Presentación: "Unidad",
+      Plegable: "Sí",
+      Secciones: "Plegable en varias secciones",
+      Accesorio: "Correa para mantenerlo plegado",
+      Recatón: "Caucho antideslizante",
+      Material: "No especificado",
+      "Altura graduable": "No especificada",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Brinda apoyo durante la marcha y puede plegarse para facilitar su almacenamiento."
+    }
+  },
+  {
+    id: 38,
+    name: "Bastón Cuatro Patas Tipo Cisne Plateado Base Mediana",
+    price: 63000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/07/Baston-cuatro-patas-tipo-Cisne-Plateado-base-Mediana.webp",
+    description:
+      "Bastón de cuatro apoyos con diseño tipo cisne y base mediana, desarrollado para proporcionar una superficie de apoyo más amplia y mayor estabilidad durante la marcha.",
+    specs: {
+      Categoría: "Bastones de cuatro apoyos",
+      Tipo: "Bastón cuadrípode",
+      Diseño: "Cuello de cisne",
+      Base: "Mediana de cuatro patas",
+      Color: "Plateado",
+      Empuñadura: "Horizontal",
+      Presentación: "Unidad",
+      "Altura graduable": "Sí",
+      Recatones: "Cuatro conteras antideslizantes",
+      Material: "No especificado",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Indicado para usuarios que requieren mayor estabilidad que la proporcionada por un bastón convencional."
+    }
+  },
+  {
+    id: 39,
+    name: "Bastón Cuatro Patas Tipo Martillo Bronce Base Mediana",
+    price: 65000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/10/Baston-cuatro-patas-tipo-Martillo-Bronce-base-Mediana.webp",
+    description:
+      "Bastón cuadrípode con empuñadura tipo martillo y base mediana, diseñado para ofrecer mayor estabilidad y apoyo durante los desplazamientos.",
+    specs: {
+      Categoría: "Bastones de cuatro apoyos",
+      Tipo: "Bastón cuadrípode",
+      Empuñadura: "Tipo martillo",
+      Base: "Mediana de cuatro patas",
+      Color: "Bronce",
+      Presentación: "Unidad",
+      "Altura graduable": "Sí",
+      Recatones: "Cuatro conteras antideslizantes",
+      Material: "No especificado",
+      "Capacidad máxima": "No especificada",
+      Uso:
+        "Brinda una base de apoyo amplia para personas que necesitan mayor seguridad y equilibrio durante la marcha."
+    }
+  },
+  {
+    id: 40,
+    name: "Recatón de Repuesto para Bastón",
+    price: 6000,
+    image: "https://ortopedicos.co/wp-content/uploads/2021/10/Recaton-%E2%80%93-Repuesto-para-Baston.webp",
+    description:
+      "Recatón de repuesto para bastón, diseñado para reemplazar conteras desgastadas y mejorar el contacto, la tracción y la estabilidad sobre el piso.",
+    specs: {
+      Categoría: "Repuestos para bastones",
+      Tipo: "Recatón o contera",
+      Presentación: "Unidad",
+      Material: "Caucho",
+      Color: "Gris",
+      Compatibilidad: "Bastones con tubo de diámetro compatible",
+      Instalación: "Ajuste a presión",
+      Función:
+        "Mejorar la tracción y proteger el extremo inferior del bastón",
+      "Diámetro interno": "No especificado",
+      Recomendación:
+        "Verificar el diámetro del tubo del bastón antes de realizar la compra."
+    }
+  },
+  {
+    id: 41,
+    name: "Recatón Mariposa",
+    price: 8500,
+    image: "https://ortopedicos.co/wp-content/uploads/2022/03/Recaton-mariposa.webp",
+    description:
+      "Recatón tipo mariposa con tres puntos de contacto, diseñado para aumentar la superficie de apoyo del bastón y mejorar la estabilidad durante la marcha.",
+    specs: {
+      Categoría: "Accesorios para bastones",
+      Tipo: "Recatón de tres apoyos",
+      Diseño: "Tipo mariposa",
+      Presentación: "Unidad",
+      Material: "Caucho o material antideslizante",
+      Color: "Negro",
+      Compatibilidad: "Bastones con tubo de diámetro compatible",
+      Instalación: "Ajuste a presión",
+      Función:
+        "Ampliar la superficie de contacto y mejorar la estabilidad del bastón",
+      "Precio anterior": "$11.000",
+      "Diámetro interno": "No especificado",
+      Recomendación:
+        "Confirmar el diámetro del tubo del bastón antes de realizar la compra."
+    }
+  }
     ],
   },
   5: {
@@ -1112,8 +1534,22 @@ const productsDatabase: Record<
 
 export default function ProductsPage() {
   const params = useParams();
+  const [search, setSearch] = useState("");
   const categoryKey = String(params?.id ?? "");
   const categoryData = productsDatabase[categoryKey];
+
+  const filteredProducts = useMemo(() => {
+    const query = search.toLowerCase().trim();
+
+    if (!categoryData || !query) {
+      return categoryData?.products ?? [];
+    }
+
+    return categoryData.products.filter((product) => {
+      const haystack = `${product.name} ${product.description}`.toLowerCase();
+      return haystack.includes(query);
+    });
+  }, [categoryData, search]);
 
   if (!categoryData) {
     return (
@@ -1163,8 +1599,22 @@ export default function ProductsPage() {
         {/* Products Grid */}
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-4">
+            <div className="mb-8">
+              <label htmlFor="product-search" className="mb-2 block text-sm font-medium text-gray-700">
+                Buscar producto
+              </label>
+              <input
+                id="product-search"
+                type="text"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Escribe el nombre o descripción"
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none placeholder:text-gray-500 focus:border-blue-500"
+              />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {categoryData.products.map((product) => (
+              {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
                   id={product.id}
