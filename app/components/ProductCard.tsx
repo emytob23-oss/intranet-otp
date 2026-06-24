@@ -1,5 +1,7 @@
 "use client";
 
+import { jsPDF } from "jspdf";
+
 interface ProductCardProps {
   id: number;
   name: string;
@@ -7,6 +9,7 @@ interface ProductCardProps {
   image: string;
   description: string;
   specs: Record<string, string>;
+  pdfUrl?: string;
 }
 
 export default function ProductCard({
@@ -16,24 +19,61 @@ export default function ProductCard({
   image,
   description,
   specs,
+  pdfUrl,
 }: ProductCardProps) {
-  const handleDownload = () => {
-    const content = [
-      `Ficha Técnica - ${name}`,
-      `Precio: $${price}`,
-      `Descripción: ${description}`,
-      "",
-      "Especificaciones:",
-      ...Object.entries(specs).map(([key, value]) => `${key}: ${value}`),
-    ].join("\n");
+  const formatPrice = (value: number) =>
+    new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 }).format(value);
 
-    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${name.toLowerCase().replace(/\s+/g, "-")}.txt`;
-    link.click();
-    URL.revokeObjectURL(url);
+  const formatTextValue = (value: string | number) =>
+    String(value).replace(/,(\d)/g, ".$1");
+
+  const handleDownload = () => {
+    if (pdfUrl) {
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.download = `${name.toLowerCase().replace(/\s+/g, "-")}-ficha-tecnica.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
+    const doc = new jsPDF({ unit: "pt", format: "a4" });
+    const margin = 40;
+    const lineHeight = 16;
+    let y = 60;
+
+    doc.setFont("poppins", "bold");
+    doc.setFontSize(18);
+    doc.text(`Ficha Técnica - ${name}`, margin, y);
+
+    y += 30;
+    doc.setFont("poppins", "normal");
+    doc.setFontSize(12);
+    doc.text(`Precio: $${formatPrice(price)}`, margin, y);
+
+    y += lineHeight;
+    const descriptionLines = doc.splitTextToSize(description, 500);
+    doc.text(descriptionLines, margin, y);
+
+    y += descriptionLines.length * lineHeight + 20;
+    doc.setFont("poppins", "bold");
+    doc.text("Especificaciones", margin, y);
+
+    y += 20;
+    doc.setFont("poppins", "normal");
+
+    Object.entries(specs).forEach(([key, value]) => {
+      const text = `${key}: ${formatTextValue(value)}`;
+      const lines = doc.splitTextToSize(text, 500);
+      doc.text(lines, margin, y);
+      y += lines.length * lineHeight;
+    });
+
+    const fileName = `${name.toLowerCase().replace(/\s+/g, "-")}-ficha-tecnica.pdf`;
+    doc.save(fileName);
   };
 
   return (
@@ -47,29 +87,32 @@ export default function ProductCard({
           <div className="flex items-start justify-between gap-3">
             <h3 className="text-xl font-semibold text-gray-900">{name}</h3>
             <span className="rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">
-              ${price}
+              ${formatPrice(price)}
             </span>
           </div>
           <p className="text-sm leading-6 text-gray-600">{description}</p>
         </div>
-
+        <div>
+          <button
+            onClick={handleDownload}
+            className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700"
+          >
+            Descargar PDF
+          </button>
+        </div>
         <div className="rounded-lg border border-gray-100 bg-gray-50 p-4">
           <div className="mb-3 flex items-center justify-between">
             <h4 className="text-sm font-semibold uppercase tracking-wide text-gray-700">
               Especificaciones
             </h4>
-           {/*  <button
-              onClick={handleDownload}
-              className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700"
-            >
-              Descargar PDF
-            </button> */}
+
           </div>
+
           <div className="space-y-2">
             {Object.entries(specs).map(([key, value]) => (
               <div key={key} className="flex items-start justify-between gap-3 text-sm">
                 <span className="text-gray-500">{key}</span>
-                <span className="text-right font-medium text-gray-900">{value}</span>
+                <span className="text-right font-medium text-gray-900">{formatTextValue(value)}</span>
               </div>
             ))}
           </div>

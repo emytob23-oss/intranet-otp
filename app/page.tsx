@@ -9,25 +9,35 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-[#141414]">
 
       
-      <main className="flex-1">
-        <section className="py-24 bg-white">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-4xl font-bold mb-4 text-center text-gray-900">
-              Categorías
-            </h2>
-            <p className="text-center text-gray-500 mb-16 max-w-2xl mx-auto">
-              Selecciona una categoría para ver todos los productos
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <main className="flex-1 bg-[#141414]">
+
+        <section className="px-5 py-20 sm:py-28">
+          <div className="mx-auto max-w-6xl">
+            <div className="mx-auto mb-14 max-w-2xl text-center">
+              <span className="mb-4 inline-flex rounded-full border border-blue-500/20 bg-blue-500/15 px-4 py-2 text-sm font-medium text-blue-500">
+                Ortopedicos y Salud ✨
+              </span>
+
+              <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+                Categorías
+              </h1>
+
+              <p className="mt-5 font-thin leading-7 text-gray-300 sm:text-lg">
+                Selecciona una categoría para consultar productos,
+                especificaciones y fichas técnicas.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {cardsData.map((card) => (
-                <Cards 
+                <Cards
                   key={card.id}
+                  title={card.title}
+                  description={card.description}
                   id={card.id}
-                  title={card.title} 
-                  description={card.description} 
                 />
               ))}
             </div>
@@ -35,7 +45,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-white border-t border-gray-200 text-gray-600 py-8 text-center">
+      <footer className="bg-[#0D1111] border-t border-gray-800 text-gray-300 py-8 text-center">
         <p>&copy; 2024 Mi Sitio. Todos los derechos reservados.</p>
       </footer>
     </div>
